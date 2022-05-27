@@ -24,7 +24,7 @@ const AddAttendeeToPresentationPage = () => {
       toast("Successfully included!", { type: 'success' });
       clearForm([setAttendeeEmail, setPresentationId])
     }).catch(({ response: { status, data } }) => {
-      if (status === 409) toast(data.message, { type: 'error' })
+      if (status === 404) toast(data.message, { type: 'error' })
       else toast("Server error. Please try again later.", { type: 'error' })
     }).finally(() => setLoading(false))
   }
@@ -34,7 +34,7 @@ const AddAttendeeToPresentationPage = () => {
       <Title>Include a Attendee in a presentation</Title>
       <Form>
         <FormInput value={attendeeEmail} onChange={setAttendeeEmail} label="Attendee's E-mail" error={!isEmailFieldValid(attendeeEmail)} />
-        <FormInput value={presentationId} onChange={setPresentationId} label="Presentation's ID" error={!isNumberFieldValid(presentationId)} />
+        <FormInput value={presentationId} type="number" onChange={setPresentationId} label="Presentation's ID" error={!isNumberFieldValid(presentationId)} />
         <Button label="Submit" onClick={onSubmit} disabled={!isFormValid()} loading={loading} />
       </Form>
     </Container>
